@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Menú LA BRAVA</title>
+    <style>
+        :root {
+            --primary-color: #000000;
+            --accent-color: #e62117;
+            --highlight-color: #ffcc00;
+            --whatsapp-color: #25D366;
+            --facebook-color: #0084FF;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+        }
+        
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; background-color: var(--bg-color); color: var(--text-color);
+            overflow-x: hidden; /* Evita el scroll horizontal en toda la web */
+        }
+
+        /* --- CARRITO FLOTANTE DERECHA --- */
+        .cart-wrapper {
+            position: fixed; top: 15px; right: 15px; z-index: 1100;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        #cartFloating {
+            background: var(--accent-color); color: white; padding: 12px 18px;
+            border-radius: 50px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(230, 33, 23, 0.6);
+            display: flex; align-items: center; gap: 10px; border: 2px solid var(--highlight-color);
+        }
+        .cart-legend {
+            color: var(--highlight-color); font-size: 10px; font-weight: bold;
+            margin-top: 5px; text-transform: uppercase; text-shadow: 1px 1px 2px black;
+        }
+
+        /* --- LOGO Y ENCABEZADO --- */
+        header { padding: 50px 10px 20px; text-align: center; background: var(--primary-color); border-bottom: 3px solid var(--accent-color); }
+        .logo { width: 180px; height: auto; margin-bottom: 10px; }
+        .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; letter-spacing: 1px; margin: 0; text-transform: uppercase; }
+
+        /* --- TABS (Móvil) --- */
+        .tabs-container {
+            background: var(--primary-color); display: flex; 
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333;
+            width: 100%;
+        }
+        .tab-btn {
+            background: #222; color: white; border: none; padding: 15px 5px;
+            font-weight: bold; cursor: pointer; flex: 1; font-size: 11px;
+            text-transform: uppercase;
+        }
+        .tab-btn.active { color: var(--highlight-color); border-bottom: 3px solid var(--accent-color); background: #111; }
+
+        /* --- GRID PRODUCTOS --- */
+        .catalogo-grid { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; 
+            padding: 15px; width: 100%; max-width: 600px; margin: auto; 
+        }
+        .producto-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer;}
+        .img-container { width: 100%; padding-top: 100%; position: relative; }
+        .img-container img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
+        .info-card { padding: 10px; text-align: center; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+        .info-card h3 { font-size: 12px; margin: 0; color: var(--highlight-color); text-transform: uppercase; line-height: 1.2; }
+
+        /* --- MODALES --- */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 10px; }
+        
+        /* Ajuste automático del contenido del modal para evitar scroll interno molesto */
+        .modal-content { 
+            background: var(--card-bg); 
+            width: 100%; 
+            max-width: 400px; 
+            max-height: 95vh; /* Ocupa casi todo el alto pero sin salirse */
+            border-radius: 15px; 
+            overflow: hidden; /* Evita scrollbars internas */
+            position: relative; 
+            border: 1px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-body { 
+            padding: 15px 20px 20px;
+            overflow-y: auto; /* Solo hace scroll el texto si es muy largo, no la foto */
+        }
+        
+        .close-btn { position: absolute; top: 10px; right: 10px; background: rgba(230, 33, 23, 0.7); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; z-index: 2010; font-size: 18px; }
+
+        /* Ajuste automático de la IMAGEN del modal */
+        .modal-img { 
+            width: 100%; 
+            height: auto;
+            max-height: 35vh; /* La foto no ocupará más del 35% del alto de la pantalla */
+            object-fit: cover; 
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* --- INGREDIENTES --- */
+        .ingredientes-lista { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+        .ingrediente-item { font-size: 11px; display: flex; align-items: center; color: #ccc; line-height: 1.2; }
+        .ingrediente-item input { margin-right: 8px; width: 18px; height: 18px; accent-color: var(--accent-color); }
+
+        /* --- CARRITO --- */
+        .item-carrito { background: #333; padding: 12px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; border-left: 4px solid var(--accent-color); position: relative; }
+        .btn-delete { position: absolute; top: 5px; right: 8px; background: none; border: none; color: #ff4444; cursor: pointer; font-size: 22px; }
+
+        .btn-action { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; color: white; font-size: 14px; display: block; text-decoration: none; text-align: center; }
+        .btn-add { background: var(--accent-color); }
+        .btn-wa { background: var(--whatsapp-color); }
+        .btn-fb { background: var(--facebook-color); }
+        .btn-cancel { background: #444; margin-top: 25px; font-size: 12px; padding: 10px; }
+        
+        select { width: 100%; padding: 14px; margin-top: 5px; background: #333; color: white; border-radius: 10px; border: 1px solid #555; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="cart-wrapper">
+        <div id="cartFloating" onclick="abrirCarrito()">
+            🛒 <span id="cartCount">0</span>
+        </div>
+        <div class="cart-legend">DA CLICK PARA PEDIR</div>
+    </div>
+
+    <header>
+        <img src="https://imgur.com/x1ZQGOO.png" alt="LA BRAVA" class="logo">
+        <p class="menu-title">MENÚ SERVICIO A DOMICILIO</p>
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="cambiarPestana('hamburguesas', this)">Hamburguesas</button>
+        <button class="tab-btn" onclick="cambiarPestana('hotdogs', this)">Hot Dogs</button>
+        <button class="tab-btn" onclick="cambiarPestana('alitas', this)">Alitas/Boneless</button>
+    </div>
+
+    <main id="hamburguesas" class="tab-content">
+        <div class="catalogo-grid">
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Clásica', 'carne de res, jamón, queso americano, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"></div>
+                <div class="info-card"><h3>Hamburguesa Clásica</h3></div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Hawaiana', 'carne de res, queso oaxaca, jamón, piña, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500"></div>
+                <div class="info-card"><h3>Hamburguesa Hawaiana</h3></div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Brava', 'carne de res, jamón, queso americano, mayonesa, crujiente tocino, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, chiles toreados', 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500"></div>
+                <div class="info-card"><h3>Hamburguesa Brava 🔥</h3></div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Monstruosa', 'doble carne de res, jamón, tocino crujiente, queso manchego fundido, queso americano, lechuga, jitomate, mayonesa, mostaza, catsup, cebolla caramelizada', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500"></div>
+                <div class="info-card"><h3>Hamburguesa Monstruosa 👹</h3></div>
+            </div>
+        </div>
+    </main>
+
+    <main id="hotdogs" class="tab-content" style="display:none;">
+        <div class="catalogo-grid">
+            <div class="producto-card" onclick="abrirModal('Hot Dog Clásico', 'salchicha jumbo, pan jumbo, jitomate, cebolla, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500"></div>
+                <div class="info-card"><h3>Hot Dog Clásico</h3></div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hot Dog con Tocino', 'salchicha jumbo, tocino, pan jumbo, jitomate, cebolla caramelizada, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500"></div>
+                <div class="info-card"><h3>Hot Dog con Tocino</h3></div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hot Dog Bravo', 'salchicha jumbo, pan jumbo, tocino, jitomate, cebolla caramelizada, chiles toreados, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500"></div>
+                <div class="info-card"><h3>Hot Dog Bravo 🔥</h3></div>
+            </div>
+        </div>
+    </main>
+
+    <main id="alitas" class="tab-content" style="display:none;">
+        <div class="catalogo-grid">
+            <div class="producto-card" onclick="abrirModal('Alitas Crujientes', 'Bastones de verdura', 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500', ['8 Piezas', '16 Piezas', '24 Piezas'], ['BBQ', 'Hot', 'Mango Habanero'])">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500"></div>
+                <div class="info-card"><h3>Alitas Crujientes</h3></div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Boneless Crujientes', 'Bastones de verdura', 'https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500', ['6 Piezas', '10 Piezas'], ['BBQ', 'Hot', 'Mango Habanero'])">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500"></div>
+                <div class="info-card"><h3>Boneless Crujientes</h3></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalProd" class="modal-overlay" onclick="cerrarModal(event)">
+        <div class="modal-content">
+            <button class="close-btn" onclick="document.getElementById('modalProd').style.display='none'">X</button>
+            <img id="mImg" class="modal-img">
+            <div class="modal-body">
+                <h2 id="mTitle" style="color:var(--highlight-color); margin:0; font-size: 18px;"></h2>
+                <div id="mExtras"></div>
+                <p style="font-size:11px; color:var(--highlight-color); margin-top:10px; font-weight: bold;">¿QUITAR ALGÚN INGREDIENTE?</p>
+                <div id="mIngredientes" class="ingredientes-lista"></div>
+                <button class="btn-action btn-add" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalCart" class="modal-overlay" onclick="cerrarModal(event)">
+        <div class="modal-content">
+            <button class="close-btn" onclick="document.getElementById('modalCart').style.display='none'">X</button>
+            <div class="modal-body">
+                <h2 style="color:var(--highlight-color); text-align:center; margin-top:0; font-size: 18px;">MI PEDIDO</h2>
+                <div id="listaCarrito"></div>
+                <button class="btn-wa btn-action" onclick="enviarPedido('wa')">PEDIR POR WHATSAPP</button>
+                <button class="btn-fb btn-action" onclick="enviarPedido('fb')">PEDIR POR MESSENGER</button>
+                <button class="btn-action btn-cancel" onclick="vaciarCarritoCompleto(true)">VACIAR TODO EL CARRITO</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MI_WA = "525512345678"; 
+        const MI_FB_ID = "100083000239346";
+
+        let carrito = [];
+
+        function cambiarPestana(id, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).style.display = 'block';
+            btn.classList.add('active');
+        }
+
+        function abrirModal(nombre, ingStr, img, piezas = null, salsas = null) {
+            document.getElementById('mTitle').innerText = nombre;
+            document.getElementById('mImg').src = img;
+            const extras = document.getElementById('mExtras');
+            extras.innerHTML = "";
+            
+            if(piezas) extras.innerHTML += `<label style="font-size:11px">CANTIDAD:</label><select id="sPiezas">${piezas.map(p=>`<option>${p}</option>`).join('')}</select>`;
+            if(salsas) extras.innerHTML += `<label style="font-size:11px">SALSA:</label><select id="sSalsas">${salsas.map(s=>`<option>${s}</option>`).join('')}</select>`;
+
+            const ingDiv = document.getElementById('mIngredientes');
+            ingDiv.innerHTML = ingStr.split(', ').map(i => `<div class="ingrediente-item"><input type="checkbox" checked data-ing="${i}"> ${i}</div>`).join('');
+            
+            document.getElementById('modalProd').style.display = 'flex';
+        }
+
+        function agregarAlCarrito() {
+            const nombre = document.getElementById('mTitle').innerText;
+            const p = document.getElementById('sPiezas') ? document.getElementById('sPiezas').value : null;
+            const s = document.getElementById('sSalsas') ? document.getElementById('sSalsas').value : null;
+            const sin = [];
+            document.querySelectorAll('#mIngredientes input:not(:checked)').forEach(i => sin.push(i.dataset.ing));
+
+            carrito.push({ nombre, p, s, sin });
+            document.getElementById('cartCount').innerText = carrito.length;
+            document.getElementById('modalProd').style.display = 'none';
+        }
+
+        function abrirCarrito() {
+            const lista = document.getElementById('listaCarrito');
+            if(carrito.length === 0) { lista.innerHTML = "<p style='text-align:center'>Tu carrito está vacío</p>"; }
+            else {
+                lista.innerHTML = carrito.map((item, idx) => `
+                    <div class="item-carrito">
+                        <button class="btn-delete" onclick="eliminarDelCarrito(${idx})">×</button>
+                        <strong>${item.nombre}</strong> ${item.p ? `(${item.p})` : ''}
+                        ${item.s ? `<br>Salsa: ${item.s}` : ''}
+                        ${item.sin.length > 0 ? `<br><small style="color:#ff4444">SIN: ${item.sin.join(', ')}</small>` : ''}
+                    </div>
+                `).join('');
+            }
+            document.getElementById('modalCart').style.display = 'flex';
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            document.getElementById('cartCount').innerText = carrito.length;
+            abrirCarrito();
+        }
+
+        function enviarPedido(tipo) {
+            if(carrito.length === 0) return;
+            let msg = "¡Hola LA BRAVA! 🔥 Quisiera este pedido:\n\n";
+            carrito.forEach((item, i) => {
+                msg += `${i+1}. ${item.nombre} ${item.p ? `(${item.p})`:''}\n`;
+                if(item.s) msg += `- Salsa: ${item.s}\n`;
+                if(item.sin.length > 0) msg += `- SIN: ${item.sin.join(', ')}\n`;
+                msg += "----------\n";
+            });
+
+            if(tipo === 'wa') {
+                window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`);
+            } else {
+                navigator.clipboard.writeText(msg);
+                alert("✅ ¡Pedido copiado!\n\nDale 'PEGAR' en el chat de Messenger que se abrirá.");
+                window.open(`https://m.me/${MI_FB_ID}`);
+            }
+
+            // Limpieza automática tras enviar
+            setTimeout(() => { vaciarCarritoCompleto(false); }, 1500);
+        }
+
+        function vaciarCarritoCompleto(confirmar) {
+            if(confirmar && !confirm("¿Borrar todo el carrito?")) return;
+            carrito = [];
+            document.getElementById('cartCount').innerText = "0";
+            document.getElementById('modalCart').style.display = 'none';
+            if(!confirmar) alert("¡Pedido enviado! Carrito limpio.");
+        }
+
+        function cerrarModal(e) { if(e.target.className === 'modal-overlay') e.target.style.display = 'none'; }
+    </script>
+</body>
+</html>
