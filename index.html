@@ -21,10 +21,10 @@
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0; background-color: var(--bg-color); color: var(--text-color);
-            overflow-x: hidden;
+            overflow-x: hidden; /* Evita el scroll horizontal en toda la web */
         }
 
-        /* --- CARRITO FLOTANTE --- */
+        /* --- CARRITO FLOTANTE DERECHA --- */
         .cart-wrapper {
             position: fixed; top: 15px; right: 15px; z-index: 1100;
             display: flex; flex-direction: column; align-items: center;
@@ -40,12 +40,12 @@
             margin-top: 5px; text-transform: uppercase; text-shadow: 1px 1px 2px black;
         }
 
-        /* --- HEADER Y LOGO --- */
+        /* --- LOGO Y ENCABEZADO --- */
         header { padding: 50px 10px 20px; text-align: center; background: var(--primary-color); border-bottom: 3px solid var(--accent-color); }
         .logo { width: 180px; height: auto; margin-bottom: 10px; }
         .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; letter-spacing: 1px; margin: 0; text-transform: uppercase; }
 
-        /* --- TABS --- */
+        /* --- TABS (Móvil) --- */
         .tabs-container {
             background: var(--primary-color); display: flex; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333;
@@ -71,23 +71,52 @@
 
         /* --- MODALES --- */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 10px; }
-        .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; max-height: 95vh; border-radius: 15px; overflow: hidden; position: relative; border: 1px solid var(--accent-color); display: flex; flex-direction: column; }
-        .modal-body { padding: 15px 20px 20px; overflow-y: auto; }
+        
+        /* Ajuste automático del contenido del modal para evitar scroll interno molesto */
+        .modal-content { 
+            background: var(--card-bg); 
+            width: 100%; 
+            max-width: 400px; 
+            max-height: 95vh; /* Ocupa casi todo el alto pero sin salirse */
+            border-radius: 15px; 
+            overflow: hidden; /* Evita scrollbars internas */
+            position: relative; 
+            border: 1px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-body { 
+            padding: 15px 20px 20px;
+            overflow-y: auto; /* Solo hace scroll el texto si es muy largo, no la foto */
+        }
+        
         .close-btn { position: absolute; top: 10px; right: 10px; background: rgba(230, 33, 23, 0.7); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; z-index: 2010; font-size: 18px; }
-        .modal-img { width: 100%; height: auto; max-height: 35vh; object-fit: cover; border-bottom: 2px solid var(--accent-color); }
 
+        /* Ajuste automático de la IMAGEN del modal */
+        .modal-img { 
+            width: 100%; 
+            height: auto;
+            max-height: 35vh; /* La foto no ocupará más del 35% del alto de la pantalla */
+            object-fit: cover; 
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* --- INGREDIENTES --- */
         .ingredientes-lista { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-        .ingrediente-item { font-size: 11px; display: flex; align-items: center; color: #ccc; }
+        .ingrediente-item { font-size: 11px; display: flex; align-items: center; color: #ccc; line-height: 1.2; }
         .ingrediente-item input { margin-right: 8px; width: 18px; height: 18px; accent-color: var(--accent-color); }
 
         /* --- CARRITO --- */
         .item-carrito { background: #333; padding: 12px; margin-bottom: 10px; border-radius: 8px; font-size: 13px; border-left: 4px solid var(--accent-color); position: relative; }
         .btn-delete { position: absolute; top: 5px; right: 8px; background: none; border: none; color: #ff4444; cursor: pointer; font-size: 22px; }
+
         .btn-action { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; color: white; font-size: 14px; display: block; text-decoration: none; text-align: center; }
         .btn-add { background: var(--accent-color); }
         .btn-wa { background: var(--whatsapp-color); }
         .btn-fb { background: var(--facebook-color); }
         .btn-cancel { background: #444; margin-top: 25px; font-size: 12px; padding: 10px; }
+        
         select { width: 100%; padding: 14px; margin-top: 5px; background: #333; color: white; border-radius: 10px; border: 1px solid #555; font-size: 14px; }
     </style>
 </head>
@@ -190,8 +219,8 @@
     </div>
 
     <script>
-        const MI_WA = "525512345678"; // <--- Tu número real
-        const MI_FB_PAGE = "https://www.facebook.com/people/La-brava/100083000239346/";
+        const MI_WA = "525512345678"; 
+        const MI_FB_ID = "100083000239346";
 
         let carrito = [];
 
@@ -231,7 +260,7 @@
 
         function abrirCarrito() {
             const lista = document.getElementById('listaCarrito');
-            if(carrito.length === 0) { lista.innerHTML = "<p style='text-align:center'>El carrito está vacío</p>"; }
+            if(carrito.length === 0) { lista.innerHTML = "<p style='text-align:center'>Tu carrito está vacío</p>"; }
             else {
                 lista.innerHTML = carrito.map((item, idx) => `
                     <div class="item-carrito">
@@ -263,31 +292,22 @@
 
             if(tipo === 'wa') {
                 window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`);
-                setTimeout(() => { vaciarCarritoCompleto(false); }, 1500);
             } else {
-                // MÉTODO SEGURO PARA FACEBOOK
-                const tempTextArea = document.createElement("textarea");
-                tempTextArea.value = msg;
-                document.body.appendChild(tempTextArea);
-                tempTextArea.select();
-                try {
-                    document.execCommand('copy');
-                    alert("✅ ¡PEDIDO COPIADO!\n\nSe abrirá la página de LA BRAVA. Dale clic al botón 'ENVIAR MENSAJE' y PEGA tu pedido.");
-                    window.open(MI_FB_PAGE);
-                    setTimeout(() => { vaciarCarritoCompleto(false); }, 1500);
-                } catch (err) {
-                    alert("No se pudo copiar automáticamente. Por favor, pídalo por WhatsApp.");
-                }
-                document.body.removeChild(tempTextArea);
+                navigator.clipboard.writeText(msg);
+                alert("✅ ¡Pedido copiado!\n\nDale 'PEGAR' en el chat de Messenger que se abrirá.");
+                window.open(`https://m.me/${MI_FB_ID}`);
             }
+
+            // Limpieza automática tras enviar
+            setTimeout(() => { vaciarCarritoCompleto(false); }, 1500);
         }
 
         function vaciarCarritoCompleto(confirmar) {
-            if(confirmar && !confirm("¿Borrar todo el pedido?")) return;
+            if(confirmar && !confirm("¿Borrar todo el carrito?")) return;
             carrito = [];
             document.getElementById('cartCount').innerText = "0";
             document.getElementById('modalCart').style.display = 'none';
-            if(!confirmar) alert("¡Listo! Carrito limpio para tu próximo pedido.");
+            if(!confirmar) alert("¡Pedido enviado! Carrito limpio.");
         }
 
         function cerrarModal(e) { if(e.target.className === 'modal-overlay') e.target.style.display = 'none'; }
