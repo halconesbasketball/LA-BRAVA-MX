@@ -21,7 +21,7 @@
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0; background-color: var(--bg-color); color: var(--text-color);
-            overflow-x: hidden; /* Evita el scroll horizontal en toda la web */
+            overflow-x: hidden;
         }
 
         /* --- CARRITO FLOTANTE DERECHA --- */
@@ -45,7 +45,7 @@
         .logo { width: 180px; height: auto; margin-bottom: 10px; }
         .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; letter-spacing: 1px; margin: 0; text-transform: uppercase; }
 
-        /* --- TABS (Móvil) --- */
+        /* --- TABS --- */
         .tabs-container {
             background: var(--primary-color); display: flex; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333;
@@ -72,14 +72,13 @@
         /* --- MODALES --- */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 10px; }
         
-        /* Ajuste automático del contenido del modal para evitar scroll interno molesto */
         .modal-content { 
             background: var(--card-bg); 
             width: 100%; 
             max-width: 400px; 
-            max-height: 95vh; /* Ocupa casi todo el alto pero sin salirse */
+            max-height: 95vh;
             border-radius: 15px; 
-            overflow: hidden; /* Evita scrollbars internas */
+            overflow: hidden;
             position: relative; 
             border: 1px solid var(--accent-color);
             display: flex;
@@ -88,16 +87,15 @@
         
         .modal-body { 
             padding: 15px 20px 20px;
-            overflow-y: auto; /* Solo hace scroll el texto si es muy largo, no la foto */
+            overflow-y: auto;
         }
         
         .close-btn { position: absolute; top: 10px; right: 10px; background: rgba(230, 33, 23, 0.7); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-weight: bold; z-index: 2010; font-size: 18px; }
 
-        /* Ajuste automático de la IMAGEN del modal */
         .modal-img { 
             width: 100%; 
             height: auto;
-            max-height: 35vh; /* La foto no ocupará más del 35% del alto de la pantalla */
+            max-height: 35vh;
             object-fit: cover; 
             border-bottom: 2px solid var(--accent-color);
         }
@@ -220,7 +218,7 @@
 
     <script>
         const MI_WA = "525512345678"; 
-        const MI_FB_ID = "100083000239346";
+        const MI_FB_ID = "100083000239346"; // Tu ID de página
 
         let carrito = [];
 
@@ -293,12 +291,14 @@
             if(tipo === 'wa') {
                 window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`);
             } else {
-                navigator.clipboard.writeText(msg);
-                alert("✅ ¡Pedido copiado!\n\nDale 'PEGAR' en el chat de Messenger que se abrirá.");
-                window.open(`https://m.me/${MI_FB_ID}`);
+                // CORRECCIÓN FINAL: Copiamos y abrimos el enlace de mensaje directo
+                navigator.clipboard.writeText(msg).then(() => {
+                    alert("✅ ¡Pedido copiado!\n\nSe abrirá el chat de LA BRAVA. Solo mantén presionado y dale 'PEGAR'.");
+                    // Usamos el enlace de perfil directo para que no falle el redireccionamiento de Messenger
+                    window.open(`https://m.me/100083000239346`);
+                });
             }
 
-            // Limpieza automática tras enviar
             setTimeout(() => { vaciarCarritoCompleto(false); }, 1500);
         }
 
