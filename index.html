@@ -18,42 +18,43 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg-color); color: white; overflow-x: hidden; }
 
-        /* CARRITO DERECHA */
+        /* CARRITO FLOTANTE DERECHA */
         .cart-wrapper { position: fixed; top: 15px; right: 15px; z-index: 1100; display: flex; flex-direction: column; align-items: center; }
-        #cartFloating { background: var(--accent-color); color: white; padding: 12px 18px; border-radius: 50px; font-weight: bold; border: 2px solid var(--highlight-color); }
-        .cart-legend { color: var(--highlight-color); font-size: 10px; margin-top: 5px; font-weight: bold; }
+        #cartFloating { background: var(--accent-color); color: white; padding: 12px 18px; border-radius: 50px; font-weight: bold; border: 2px solid var(--highlight-color); box-shadow: 0 4px 15px rgba(230, 33, 23, 0.6); cursor: pointer; }
+        .cart-legend { color: var(--highlight-color); font-size: 10px; margin-top: 5px; font-weight: bold; text-shadow: 1px 1px 2px black; }
 
         /* HEADER */
         header { padding: 50px 10px 20px; text-align: center; background: var(--primary-color); border-bottom: 3px solid var(--accent-color); }
         .logo { width: 180px; margin-bottom: 10px; }
-        .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; text-transform: uppercase; }
+        .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
         /* TABS */
         .tabs-container { background: var(--primary-color); display: flex; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
         .tab-btn { background: #222; color: white; border: none; padding: 15px; flex: 1; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .tab-btn.active { color: var(--highlight-color); border-bottom: 3px solid var(--accent-color); }
+        .tab-btn.active { color: var(--highlight-color); border-bottom: 3px solid var(--accent-color); background: #111; }
 
         /* GRID */
         .catalogo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; max-width: 600px; margin: auto; }
-        .producto-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; }
+        .producto-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer; }
         .img-container { width: 100%; padding-top: 100%; position: relative; }
         .img-container img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
-        .info-card { padding: 10px; text-align: center; font-size: 12px; color: var(--highlight-color); font-weight: bold; }
+        .info-card { padding: 10px; text-align: center; font-size: 11px; color: var(--highlight-color); font-weight: bold; min-height: 50px; display: flex; align-items: center; justify-content: center; }
 
         /* MODALES */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; padding: 10px; }
-        .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; max-height: 90vh; border-radius: 15px; border: 1px solid var(--accent-color); display: flex; flex-direction: column; overflow: hidden; }
-        .modal-img { width: 100%; max-height: 35vh; object-fit: cover; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 10px; }
+        .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; max-height: 95vh; border-radius: 15px; border: 1px solid var(--accent-color); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .modal-img { width: 100%; max-height: 35vh; object-fit: cover; border-bottom: 2px solid var(--accent-color); }
         .modal-body { padding: 15px; overflow-y: auto; }
-        .close-btn { position: absolute; top: 15px; right: 15px; background: var(--accent-color); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; font-weight: bold; }
+        .close-btn { position: absolute; top: 10px; right: 10px; background: var(--accent-color); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; font-weight: bold; z-index: 2010; }
 
         .ingredientes-lista { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
         .ingrediente-item { font-size: 11px; display: flex; align-items: center; color: #ccc; }
         .ingrediente-item input { margin-right: 8px; width: 18px; height: 18px; accent-color: var(--accent-color); }
 
-        .btn-action { width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; margin-top: 10px; color: white; text-align: center; text-decoration: none; display: block; border: none; }
+        .btn-action { width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; margin-top: 10px; color: white; text-align: center; text-decoration: none; display: block; border: none; font-size: 14px; }
         .btn-wa { background: var(--whatsapp-color); }
         .btn-fb { background: var(--facebook-color); }
+        select { width: 100%; padding: 14px; margin-top: 5px; background: #333; color: white; border-radius: 10px; border: 1px solid #555; }
     </style>
 </head>
 <body>
@@ -80,9 +81,47 @@
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"></div>
                 <div class="info-card">Hamburguesa Clásica</div>
             </div>
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Hawaiana', 'carne de res, queso oaxaca, jamón, piña, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500"></div>
+                <div class="info-card">Hamburguesa Hawaiana</div>
+            </div>
             <div class="producto-card" onclick="abrirModal('Hamburguesa Brava 🔥', 'carne de res, jamón, queso americano, mayonesa, tocino, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, chiles toreados', 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500')">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500"></div>
                 <div class="info-card">Hamburguesa Brava</div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Monstruosa 👹', 'doble carne de res, jamón, extra tocino crujiente, queso manchego fundido, queso americano, lechuga, jitomate, mayonesa, mostaza, catsup, cebolla caramelizada', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500"></div>
+                <div class="info-card">Hamburguesa Monstruosa</div>
+            </div>
+        </div>
+    </main>
+
+    <main id="hotdogs" class="tab-content" style="display:none;">
+        <div class="catalogo-grid">
+            <div class="producto-card" onclick="abrirModal('Hot Dog Clásico', 'salchicha jumbo, pan jumbo, jitomate, cebolla, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500"></div>
+                <div class="info-card">Hot Dog Clásico</div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hot Dog con Tocino', 'salchicha jumbo envuelta en tocino, pan jumbo, jitomate, cebolla caramelizada, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500"></div>
+                <div class="info-card">Hot Dog Tocino</div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Hot Dog Bravo 🔥', 'salchicha jumbo, pan jumbo, trocitos de tocino, jitomate, cebolla caramelizada, chiles toreados, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500"></div>
+                <div class="info-card">Hot Dog Bravo</div>
+            </div>
+        </div>
+    </main>
+
+    <main id="alitas" class="tab-content" style="display:none;">
+        <div class="catalogo-grid">
+            <div class="producto-card" onclick="abrirModal('Alitas Crujientes', 'bastones de verdura', 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500', ['8 Piezas', '16 Piezas', '24 Piezas'], ['BBQ', 'Hot', 'Mango Habanero'])">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500"></div>
+                <div class="info-card">Alitas Crujientes</div>
+            </div>
+            <div class="producto-card" onclick="abrirModal('Boneless Crujientes', 'bastones de verdura', 'https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500', ['6 Piezas', '10 Piezas'], ['BBQ', 'Hot', 'Mango Habanero'])">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500"></div>
+                <div class="info-card">Boneless Crujientes</div>
             </div>
         </div>
     </main>
@@ -107,22 +146,28 @@
             <div class="modal-body">
                 <h2 style="color:var(--highlight-color); text-align:center;">MI PEDIDO</h2>
                 <div id="listaCarrito"></div>
-                <button class="btn-wa btn-action" onclick="enviarPedido('wa')">PEDIR POR WHATSAPP </button>
+                <button class="btn-wa btn-action" onclick="enviarPedido('wa')">PEDIR POR WHATSAPP</button>
                 <button class="btn-fb btn-action" onclick="enviarPedido('fb')">PEDIR POR FACEBOOK</button>
+                <button class="btn-action" style="background:#444" onclick="vaciarTodo()">BORRAR TODO</button>
             </div>
         </div>
     </div>
 
     <script>
-        const MI_WA = "525531887845"; 
-        // CAMBIA ESTO: Usa el nombre de usuario de tu página de FB si es posible
-        const MI_FB_CHAT = "https://m.me/100083000239346"; 
+        const MI_WA = "525512345678"; // <--- Tu WhatsApp real
+        const MI_FB_ID = "100083000239346"; 
 
         let carrito = [];
 
         function abrirModal(nombre, ingStr, img, piezas = null, salsas = null) {
             document.getElementById('mTitle').innerText = nombre;
             document.getElementById('mImg').src = img;
+            const extras = document.getElementById('mExtras');
+            extras.innerHTML = "";
+            
+            if(piezas) extras.innerHTML += `<label style="font-size:11px">CANTIDAD:</label><select id="sPiezas">${piezas.map(p=>`<option>${p}</option>`).join('')}</select>`;
+            if(salsas) extras.innerHTML += `<label style="font-size:11px">SALSA:</label><select id="sSalsas">${salsas.map(s=>`<option>${s}</option>`).join('')}</select>`;
+
             const ingDiv = document.getElementById('mIngredientes');
             ingDiv.innerHTML = ingStr.split(', ').map(i => `<div class="ingrediente-item"><input type="checkbox" checked data-ing="${i}"> ${i}</div>`).join('');
             document.getElementById('modalProd').style.display = 'flex';
@@ -130,18 +175,22 @@
 
         function agregarAlCarrito() {
             const nombre = document.getElementById('mTitle').innerText;
+            const p = document.getElementById('sPiezas') ? document.getElementById('sPiezas').value : null;
+            const s = document.getElementById('sSalsas') ? document.getElementById('sSalsas').value : null;
             const sin = [];
             document.querySelectorAll('#mIngredientes input:not(:checked)').forEach(i => sin.push(i.dataset.ing));
-            carrito.push({ nombre, sin });
+            carrito.push({ nombre, p, s, sin });
             document.getElementById('cartCount').innerText = carrito.length;
             document.getElementById('modalProd').style.display = 'none';
         }
 
         function abrirCarrito() {
             const lista = document.getElementById('listaCarrito');
-            lista.innerHTML = carrito.length === 0 ? "<p>Vacío</p>" : carrito.map((item, idx) => `
+            lista.innerHTML = carrito.length === 0 ? "<p style='text-align:center'>Vacío</p>" : carrito.map((item, idx) => `
                 <div style="background:#333; padding:10px; margin-bottom:5px; border-radius:8px;">
-                    <strong>${item.nombre}</strong> ${item.sin.length > 0 ? `<br><small style="color:red">SIN: ${item.sin.join(', ')}</small>` : ''}
+                    <strong>${item.nombre}</strong> ${item.p ? `(${item.p})` : ''}
+                    ${item.s ? `<br>Salsa: ${item.s}` : ''}
+                    ${item.sin.length > 0 ? `<br><small style="color:red">SIN: ${item.sin.join(', ')}</small>` : ''}
                 </div>
             `).join('');
             document.getElementById('modalCart').style.display = 'flex';
@@ -151,26 +200,25 @@
             if(carrito.length === 0) return;
             let msg = "¡Hola LA BRAVA! 🔥 Quisiera este pedido:\n\n";
             carrito.forEach((item, i) => {
-                msg += `${i+1}. ${item.nombre}\n${item.sin.length > 0 ? `- SIN: ${item.sin.join(', ')}\n` : ''}`;
+                msg += `${i+1}. ${item.nombre} ${item.p ? `(${item.p})`:''}\n`;
+                if(item.s) msg += `- Salsa: ${item.s}\n`;
+                if(item.sin.length > 0) msg += `- SIN: ${item.sin.join(', ')}\n`;
+                msg += "----------\n";
             });
 
             if(tipo === 'wa') {
-                // EN WHATSAPP EL TEXTO SÍ APARECE AUTOMÁTICAMENTE
                 window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`);
             } else {
-                // EN FACEBOOK SOLO PODEMOS COPIAR Y ABRIR EL CHAT
                 const el = document.createElement('textarea');
-                el.value = msg;
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-                alert("✅ Pedido copiado. Pégalo en el chat.");
-                window.open(MI_FB_CHAT);
+                el.value = msg; document.body.appendChild(el); el.select();
+                document.execCommand('copy'); document.body.removeChild(el);
+                alert("✅ Copiado. Ábrese el chat y pégalo.");
+                window.open(`https://m.me/${MI_FB_ID}`);
             }
             setTimeout(() => { location.reload(); }, 2000);
         }
 
+        function vaciarTodo() { carrito = []; document.getElementById('cartCount').innerText = "0"; abrirCarrito(); }
         function cambiarPestana(id, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
