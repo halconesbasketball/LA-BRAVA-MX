@@ -16,6 +16,7 @@
             --text-color: #ffffff;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg-color); color: white; overflow-x: hidden; }
 
         /* CARRITO FLOTANTE DERECHA */
@@ -29,9 +30,8 @@
         .logo { width: 180px; margin-bottom: 10px; }
         .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* TABS - flex-wrap para evitar scroll horizontal en celulares */
+        /* TABS - flex-wrap para celulares a 2 columnas */
         .tabs-container { background: var(--primary-color); display: flex; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
-        /* Ajustado a 40% para que sean 2 filas de 2 en pantallas pequeñas */
         .tab-btn { background: #222; color: white; border: none; padding: 12px 5px; flex: 1 1 40%; font-size: 11px; font-weight: bold; text-transform: uppercase; transition: background 0.3s; text-align: center; border-right: 1px solid #111; border-bottom: 1px solid #111; }
         .tab-btn.active { color: var(--highlight-color); border-bottom: 3px solid var(--accent-color); background: #111; }
 
@@ -41,7 +41,7 @@
         .producto-card:active { transform: scale(0.95); border-color: var(--accent-color); }
         .img-container { width: 100%; padding-top: 100%; position: relative; }
         .img-container img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
-        .info-card { padding: 10px; text-align: center; font-size: 12px; color: var(--highlight-color); font-weight: bold; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .info-card { padding: 10px; text-align: center; font-size: 12px; color: var(--highlight-color); font-weight: bold; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60px; }
         .precio-badge { color: white; background: var(--accent-color); padding: 3px 8px; border-radius: 5px; font-size: 11px; margin-top: 5px; }
 
         /* MODALES */
@@ -98,9 +98,20 @@
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"></div>
                 <div class="info-card">Hamburguesa Clásica <span class="precio-badge">$85</span></div>
             </div>
+            
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Hawaiana', 95, 'carne de res, queso oaxaca, jamón, piña, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500"></div>
+                <div class="info-card">Hamburguesa Hawaiana <span class="precio-badge">$95</span></div>
+            </div>
+
             <div class="producto-card" onclick="abrirModal('Hamburguesa Brava 🔥', 110, 'carne de res, jamón, queso americano, mayonesa, tocino, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, chiles toreados', 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500')">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500"></div>
                 <div class="info-card">Hamburguesa Brava <span class="precio-badge">$110</span></div>
+            </div>
+
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Monstruosa 👹', 140, 'doble carne de res, jamón, extra tocino crujiente, queso manchego fundido, queso americano, lechuga, jitomate, mayonesa, mostaza, catsup, cebolla caramelizada', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500"></div>
+                <div class="info-card">Hamburguesa Monstruosa <span class="precio-badge">$140</span></div>
             </div>
         </div>
     </main>
@@ -111,18 +122,29 @@
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500"></div>
                 <div class="info-card">Hot Dog Clásico <span class="precio-badge">$45</span></div>
             </div>
+
+            <div class="producto-card" onclick="abrirModal('Hot Dog con Tocino', 55, 'salchicha jumbo envuelta en tocino, pan jumbo, jitomate, cebolla caramelizada, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500"></div>
+                <div class="info-card">Hot Dog con Tocino <span class="precio-badge">$55</span></div>
+            </div>
+
+            <div class="producto-card" onclick="abrirModal('Hot Dog Bravo 🔥', 65, 'salchicha jumbo, pan jumbo, trocitos de tocino, jitomate, cebolla caramelizada, chiles toreados, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500"></div>
+                <div class="info-card">Hot Dog Bravo <span class="precio-badge">$65</span></div>
+            </div>
         </div>
     </main>
 
     <main id="alitas" class="tab-content" style="display:none;">
         <div class="catalogo-grid">
-            <div class="producto-card" onclick="abrirModal('Alitas Crujientes', 0, 'bastones de verdura', 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500', ['8 Piezas - $110', '16 Piezas - $200'], ['BBQ', 'Hot', 'Mango Habanero'])">
+            <div class="producto-card" onclick="abrirModal('Alitas Crujientes', 0, 'bastones de verdura', 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500', ['8 Piezas - $110', '16 Piezas - $200', '24 Piezas - $280'], ['BBQ', 'Hot', 'Mango Habanero'])">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500"></div>
                 <div class="info-card">Alitas Crujientes <span class="precio-badge">Desde $110</span></div>
             </div>
-            <div class="producto-card" onclick="abrirModal('Boneless', 0, 'bastones de verdura', 'https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500', ['6 Piezas - $95', '10 Piezas - $140'], ['BBQ', 'Hot', 'Mango Habanero'])">
+
+            <div class="producto-card" onclick="abrirModal('Boneless Crujientes', 0, 'bastones de verdura', 'https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500', ['6 Piezas - $95', '10 Piezas - $140'], ['BBQ', 'Hot', 'Mango Habanero'])">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500"></div>
-                <div class="info-card">Boneless <span class="precio-badge">Desde $95</span></div>
+                <div class="info-card">Boneless Crujientes <span class="precio-badge">Desde $95</span></div>
             </div>
         </div>
     </main>
@@ -170,7 +192,8 @@
     </div>
 
     <script>
-        const MI_WA = "525512345678"; // <--- Tu WhatsApp real
+        // NO OLVIDES PONER TU NÚMERO REAL DE WHATSAPP
+        const MI_WA = "525512345678"; 
         const MI_FB_ID = "100083000239346"; 
 
         let carrito = [];
@@ -265,24 +288,38 @@
             msg += `\n💰 *TOTAL A PAGAR: $${total}*`;
 
             if(tipo === 'wa') {
-                window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`, '_blank');
+                const urlWhatsApp = `https://api.whatsapp.com/send?phone=${MI_WA}&text=${encodeURIComponent(msg)}`;
+                
+                vaciarTodo(); 
+                document.getElementById('modalCart').style.display = 'none';
+                document.getElementById('nombreCliente').value = ''; 
+                
+                window.location.href = urlWhatsApp;
+                
             } else {
                 const el = document.createElement('textarea');
                 el.value = msg; 
                 el.setAttribute('readonly', '');
-                el.style.position = 'absolute'; el.style.left = '-9999px';
-                document.body.appendChild(el); el.select();
-                document.execCommand('copy'); document.body.removeChild(el);
+                el.style.position = 'absolute'; 
+                el.style.left = '-9999px';
+                document.body.appendChild(el); 
+                el.select();
                 
-                alert("✅ Pedido copiado. Se abrirá el chat, pégalo ahí.");
-                window.open(`https://m.me/${MI_FB_ID}`, '_blank');
-            }
+                try {
+                    document.execCommand('copy');
+                    alert("✅ Pedido copiado.\n\nTe llevaremos al perfil de LA BRAVA. Presiona 'Mensaje' y PEGA tu pedido en el chat.");
+                } catch (err) {
+                    alert("⚠️ Tu pedido está listo, por favor toma captura de pantalla.");
+                }
+                
+                document.body.removeChild(el);
 
-            setTimeout(() => { 
                 vaciarTodo(); 
                 document.getElementById('modalCart').style.display = 'none';
                 document.getElementById('nombreCliente').value = ''; 
-            }, 1500);
+                
+                window.location.href = `https://www.facebook.com/${MI_FB_ID}`;
+            }
         }
 
         function vaciarTodo() { 
