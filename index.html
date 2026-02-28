@@ -20,7 +20,8 @@
 
         /* CARRITO FLOTANTE DERECHA */
         .cart-wrapper { position: fixed; top: 15px; right: 15px; z-index: 1100; display: flex; flex-direction: column; align-items: center; }
-        #cartFloating { background: var(--accent-color); color: white; padding: 12px 18px; border-radius: 50px; font-weight: bold; border: 2px solid var(--highlight-color); box-shadow: 0 4px 15px rgba(230, 33, 23, 0.6); cursor: pointer; }
+        #cartFloating { background: var(--accent-color); color: white; padding: 12px 18px; border-radius: 50px; font-weight: bold; border: 2px solid var(--highlight-color); box-shadow: 0 4px 15px rgba(230, 33, 23, 0.6); cursor: pointer; transition: transform 0.2s; }
+        #cartFloating:active { transform: scale(0.9); }
         .cart-legend { color: var(--highlight-color); font-size: 10px; margin-top: 5px; font-weight: bold; text-shadow: 1px 1px 2px black; }
 
         /* HEADER */
@@ -28,33 +29,46 @@
         .logo { width: 180px; margin-bottom: 10px; }
         .menu-title { color: var(--highlight-color); font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* TABS */
-        .tabs-container { background: var(--primary-color); display: flex; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
-        .tab-btn { background: #222; color: white; border: none; padding: 15px; flex: 1; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        /* TABS - flex-wrap para evitar scroll horizontal en celulares */
+        .tabs-container { background: var(--primary-color); display: flex; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
+        /* Ajustado a 40% para que sean 2 filas de 2 en pantallas pequeñas */
+        .tab-btn { background: #222; color: white; border: none; padding: 12px 5px; flex: 1 1 40%; font-size: 11px; font-weight: bold; text-transform: uppercase; transition: background 0.3s; text-align: center; border-right: 1px solid #111; border-bottom: 1px solid #111; }
         .tab-btn.active { color: var(--highlight-color); border-bottom: 3px solid var(--accent-color); background: #111; }
 
         /* GRID */
         .catalogo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; max-width: 600px; margin: auto; }
-        .producto-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer; }
+        .producto-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+        .producto-card:active { transform: scale(0.95); border-color: var(--accent-color); }
         .img-container { width: 100%; padding-top: 100%; position: relative; }
         .img-container img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
-        .info-card { padding: 10px; text-align: center; font-size: 11px; color: var(--highlight-color); font-weight: bold; min-height: 50px; display: flex; align-items: center; justify-content: center; }
+        .info-card { padding: 10px; text-align: center; font-size: 12px; color: var(--highlight-color); font-weight: bold; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .precio-badge { color: white; background: var(--accent-color); padding: 3px 8px; border-radius: 5px; font-size: 11px; margin-top: 5px; }
 
         /* MODALES */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 10px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 10px; opacity: 0; animation: fadeIn 0.3s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
         .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; max-height: 95vh; border-radius: 15px; border: 1px solid var(--accent-color); display: flex; flex-direction: column; overflow: hidden; position: relative; }
         .modal-img { width: 100%; max-height: 35vh; object-fit: cover; border-bottom: 2px solid var(--accent-color); }
         .modal-body { padding: 15px; overflow-y: auto; }
-        .close-btn { position: absolute; top: 10px; right: 10px; background: var(--accent-color); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; font-weight: bold; z-index: 2010; }
+        .close-btn { position: absolute; top: 10px; right: 10px; background: var(--accent-color); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; font-weight: bold; z-index: 2010; cursor: pointer; }
 
         .ingredientes-lista { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
         .ingrediente-item { font-size: 11px; display: flex; align-items: center; color: #ccc; }
         .ingrediente-item input { margin-right: 8px; width: 18px; height: 18px; accent-color: var(--accent-color); }
 
-        .btn-action { width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; margin-top: 10px; color: white; text-align: center; text-decoration: none; display: block; border: none; font-size: 14px; }
+        .btn-action { width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; margin-top: 10px; color: white; text-align: center; text-decoration: none; display: block; border: none; font-size: 14px; cursor: pointer; transition: opacity 0.2s; }
+        .btn-action:active { opacity: 0.8; }
         .btn-wa { background: var(--whatsapp-color); }
         .btn-fb { background: var(--facebook-color); }
-        select { width: 100%; padding: 14px; margin-top: 5px; background: #333; color: white; border-radius: 10px; border: 1px solid #555; }
+        select, input[type="text"] { width: 100%; padding: 14px; margin-top: 5px; background: #333; color: white; border-radius: 10px; border: 1px solid #555; }
+        input[type="text"]::placeholder { color: #aaa; }
+        
+        /* TOAST NOTIFICACIÓN */
+        #toast { visibility: hidden; min-width: 250px; background-color: var(--highlight-color); color: black; text-align: center; border-radius: 10px; padding: 12px; position: fixed; z-index: 3000; bottom: 30px; left: 50%; transform: translateX(-50%); font-weight: bold; font-size: 13px; opacity: 0; transition: opacity 0.3s, visibility 0.3s; }
+        #toast.show { visibility: visible; opacity: 1; }
+        
+        /* TOTAL CARRITO */
+        .total-container { text-align: right; font-size: 18px; font-weight: bold; color: var(--highlight-color); margin: 15px 0; padding-top: 10px; border-top: 1px dashed #555; }
     </style>
 </head>
 <body>
@@ -64,64 +78,60 @@
         <div class="cart-legend">DA CLICK PARA PEDIR</div>
     </div>
 
+    <div id="toast">✅ Agregado al pedido</div>
+
     <header>
-        <img src="https://imgur.com/x1ZQGOO.png" class="logo">
+        <img src="https://imgur.com/x1ZQGOO.png" class="logo" alt="LA BRAVA">
         <p class="menu-title">MENÚ SERVICIO A DOMICILIO</p>
     </header>
 
     <div class="tabs-container">
-        <button class="tab-btn active" onclick="cambiarPestana('hamburguesas', this)">Hamburguesas</button>
-        <button class="tab-btn" onclick="cambiarPestana('hotdogs', this)">Hot Dogs</button>
-        <button class="tab-btn" onclick="cambiarPestana('alitas', this)">Alitas/Boneless</button>
+        <button class="tab-btn active" onclick="cambiarPestana('hamburguesas', this)">🍔 Hamburguesas</button>
+        <button class="tab-btn" onclick="cambiarPestana('hotdogs', this)">🌭 Hot Dogs</button>
+        <button class="tab-btn" onclick="cambiarPestana('alitas', this)">🍗 Boneless/Alitas</button>
+        <button class="tab-btn" onclick="cambiarPestana('papas', this)">🍟 Papas</button>
     </div>
 
     <main id="hamburguesas" class="tab-content">
         <div class="catalogo-grid">
-            <div class="producto-card" onclick="abrirModal('Hamburguesa Clásica', 'carne de res, jamón, queso americano, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500')">
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Clásica', 85, 'carne de res, jamón, queso americano, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500')">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"></div>
-                <div class="info-card">Hamburguesa Clásica</div>
+                <div class="info-card">Hamburguesa Clásica <span class="precio-badge">$85</span></div>
             </div>
-            <div class="producto-card" onclick="abrirModal('Hamburguesa Hawaiana', 'carne de res, queso oaxaca, jamón, piña, mayonesa, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, jalapeños', 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500')">
-                <div class="img-container"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500"></div>
-                <div class="info-card">Hamburguesa Hawaiana</div>
-            </div>
-            <div class="producto-card" onclick="abrirModal('Hamburguesa Brava 🔥', 'carne de res, jamón, queso americano, mayonesa, tocino, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, chiles toreados', 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500')">
+            <div class="producto-card" onclick="abrirModal('Hamburguesa Brava 🔥', 110, 'carne de res, jamón, queso americano, mayonesa, tocino, mostaza, catsup, lechuga, jitomate, cebolla, pepinillos, chiles toreados', 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500')">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500"></div>
-                <div class="info-card">Hamburguesa Brava</div>
-            </div>
-            <div class="producto-card" onclick="abrirModal('Hamburguesa Monstruosa 👹', 'doble carne de res, jamón, extra tocino crujiente, queso manchego fundido, queso americano, lechuga, jitomate, mayonesa, mostaza, catsup, cebolla caramelizada', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500')">
-                <div class="img-container"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500"></div>
-                <div class="info-card">Hamburguesa Monstruosa</div>
+                <div class="info-card">Hamburguesa Brava <span class="precio-badge">$110</span></div>
             </div>
         </div>
     </main>
 
     <main id="hotdogs" class="tab-content" style="display:none;">
         <div class="catalogo-grid">
-            <div class="producto-card" onclick="abrirModal('Hot Dog Clásico', 'salchicha jumbo, pan jumbo, jitomate, cebolla, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500')">
+            <div class="producto-card" onclick="abrirModal('Hot Dog Clásico', 45, 'salchicha jumbo, pan jumbo, jitomate, cebolla, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500')">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1541214113241-21578d2d9b62?w=500"></div>
-                <div class="info-card">Hot Dog Clásico</div>
-            </div>
-            <div class="producto-card" onclick="abrirModal('Hot Dog con Tocino', 'salchicha jumbo envuelta en tocino, pan jumbo, jitomate, cebolla caramelizada, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500')">
-                <div class="img-container"><img src="https://images.unsplash.com/photo-1599599810694-b5b37304c041?w=500"></div>
-                <div class="info-card">Hot Dog Tocino</div>
-            </div>
-            <div class="producto-card" onclick="abrirModal('Hot Dog Bravo 🔥', 'salchicha jumbo, pan jumbo, trocitos de tocino, jitomate, cebolla caramelizada, chiles toreados, mayonesa, catsup, mostaza', 'https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500')">
-                <div class="img-container"><img src="https://images.unsplash.com/photo-1612392062631-94dd858cba88?w=500"></div>
-                <div class="info-card">Hot Dog Bravo</div>
+                <div class="info-card">Hot Dog Clásico <span class="precio-badge">$45</span></div>
             </div>
         </div>
     </main>
 
     <main id="alitas" class="tab-content" style="display:none;">
         <div class="catalogo-grid">
-            <div class="producto-card" onclick="abrirModal('Alitas Crujientes', 'bastones de verdura', 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500', ['8 Piezas', '16 Piezas', '24 Piezas'], ['BBQ', 'Hot', 'Mango Habanero'])">
+            <div class="producto-card" onclick="abrirModal('Alitas Crujientes', 0, 'bastones de verdura', 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500', ['8 Piezas - $110', '16 Piezas - $200'], ['BBQ', 'Hot', 'Mango Habanero'])">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=500"></div>
-                <div class="info-card">Alitas Crujientes</div>
+                <div class="info-card">Alitas Crujientes <span class="precio-badge">Desde $110</span></div>
             </div>
-            <div class="producto-card" onclick="abrirModal('Boneless Crujientes', 'bastones de verdura', 'https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500', ['6 Piezas', '10 Piezas'], ['BBQ', 'Hot', 'Mango Habanero'])">
+            <div class="producto-card" onclick="abrirModal('Boneless', 0, 'bastones de verdura', 'https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500', ['6 Piezas - $95', '10 Piezas - $140'], ['BBQ', 'Hot', 'Mango Habanero'])">
                 <div class="img-container"><img src="https://images.unsplash.com/photo-1562967914-6c82c6509ff6?w=500"></div>
-                <div class="info-card">Boneless Crujientes</div>
+                <div class="info-card">Boneless <span class="precio-badge">Desde $95</span></div>
+            </div>
+        </div>
+    </main>
+
+    <main id="papas" class="tab-content" style="display:none;">
+        <div class="catalogo-grid">
+            <div class="producto-card" onclick="abrirModal('Papas a la Francesa', 55, 'sal, aderezo de la casa, catsup', 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500"></div>
+                <div class="info-card">Papas a la Francesa <span class="precio-badge">$55</span></div>
             </div>
         </div>
     </main>
@@ -132,8 +142,9 @@
             <img id="mImg" class="modal-img">
             <div class="modal-body">
                 <h2 id="mTitle" style="color:var(--highlight-color); margin:0; font-size: 18px;"></h2>
+                <span id="mPrecioVal" style="display:none;"></span>
                 <div id="mExtras"></div>
-                <p style="font-size:11px; color:var(--highlight-color); margin-top:10px; font-weight: bold;">¿QUITAR INGREDIENTES?</p>
+                <p style="font-size:11px; color:var(--highlight-color); margin-top:10px; font-weight: bold;">¿QUITAR ALGO?</p>
                 <div id="mIngredientes" class="ingredientes-lista"></div>
                 <button class="btn-action" style="background:var(--accent-color)" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO</button>
             </div>
@@ -144,8 +155,13 @@
         <div class="modal-content">
             <button class="close-btn" onclick="document.getElementById('modalCart').style.display='none'">X</button>
             <div class="modal-body">
-                <h2 style="color:var(--highlight-color); text-align:center;">MI PEDIDO</h2>
+                <h2 style="color:var(--highlight-color); text-align:center; margin-top:0;">MI PEDIDO</h2>
+                
+                <input type="text" id="nombreCliente" placeholder="¿Cuál es tu nombre? (Opcional)" autocomplete="off">
+                <br><br>
+
                 <div id="listaCarrito"></div>
+                <div id="totalCarrito" class="total-container">Total: $0</div>
                 <button class="btn-wa btn-action" onclick="enviarPedido('wa')">PEDIR POR WHATSAPP</button>
                 <button class="btn-fb btn-action" onclick="enviarPedido('fb')">PEDIR POR FACEBOOK</button>
                 <button class="btn-action" style="background:#444" onclick="vaciarTodo()">BORRAR TODO</button>
@@ -159,14 +175,16 @@
 
         let carrito = [];
 
-        function abrirModal(nombre, ingStr, img, piezas = null, salsas = null) {
+        function abrirModal(nombre, precioBase, ingStr, img, piezas = null, salsas = null) {
             document.getElementById('mTitle').innerText = nombre;
+            document.getElementById('mPrecioVal').innerText = precioBase; 
             document.getElementById('mImg').src = img;
+            
             const extras = document.getElementById('mExtras');
             extras.innerHTML = "";
             
-            if(piezas) extras.innerHTML += `<label style="font-size:11px">CANTIDAD:</label><select id="sPiezas">${piezas.map(p=>`<option>${p}</option>`).join('')}</select>`;
-            if(salsas) extras.innerHTML += `<label style="font-size:11px">SALSA:</label><select id="sSalsas">${salsas.map(s=>`<option>${s}</option>`).join('')}</select>`;
+            if(piezas) extras.innerHTML += `<label style="font-size:11px">CANTIDAD:</label><select id="sPiezas">${piezas.map(p=>`<option value="${p}">${p}</option>`).join('')}</select>`;
+            if(salsas) extras.innerHTML += `<label style="font-size:11px">SALSA/SABOR:</label><select id="sSalsas">${salsas.map(s=>`<option>${s}</option>`).join('')}</select>`;
 
             const ingDiv = document.getElementById('mIngredientes');
             ingDiv.innerHTML = ingStr.split(', ').map(i => `<div class="ingrediente-item"><input type="checkbox" checked data-ing="${i}"> ${i}</div>`).join('');
@@ -175,57 +193,118 @@
 
         function agregarAlCarrito() {
             const nombre = document.getElementById('mTitle').innerText;
+            let precio = parseFloat(document.getElementById('mPrecioVal').innerText);
+            
             const p = document.getElementById('sPiezas') ? document.getElementById('sPiezas').value : null;
             const s = document.getElementById('sSalsas') ? document.getElementById('sSalsas').value : null;
+            
+            if(p && p.includes('$')) {
+                precio = parseFloat(p.split('$')[1]);
+            }
+
             const sin = [];
             document.querySelectorAll('#mIngredientes input:not(:checked)').forEach(i => sin.push(i.dataset.ing));
-            carrito.push({ nombre, p, s, sin });
+            
+            carrito.push({ nombre, precio, p, s, sin });
+            
             document.getElementById('cartCount').innerText = carrito.length;
             document.getElementById('modalProd').style.display = 'none';
+            mostrarToast();
         }
 
         function abrirCarrito() {
             const lista = document.getElementById('listaCarrito');
-            lista.innerHTML = carrito.length === 0 ? "<p style='text-align:center'>Vacío</p>" : carrito.map((item, idx) => `
-                <div style="background:#333; padding:10px; margin-bottom:5px; border-radius:8px;">
-                    <strong>${item.nombre}</strong> ${item.p ? `(${item.p})` : ''}
-                    ${item.s ? `<br>Salsa: ${item.s}` : ''}
-                    ${item.sin.length > 0 ? `<br><small style="color:red">SIN: ${item.sin.join(', ')}</small>` : ''}
-                </div>
-            `).join('');
+            let total = 0;
+            
+            if(carrito.length === 0) {
+                lista.innerHTML = "<p style='text-align:center; color:#ccc;'>Tu pedido está vacío 🍔</p>";
+                document.getElementById('totalCarrito').style.display = 'none';
+            } else {
+                document.getElementById('totalCarrito').style.display = 'block';
+                lista.innerHTML = carrito.map((item, idx) => {
+                    total += item.precio;
+                    let textoPieza = item.p ? `(${item.p.split(' - ')[0]})` : '';
+                    
+                    return `
+                    <div style="background:#333; padding:10px; margin-bottom:8px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <div style="flex:1;">
+                            <strong>${item.nombre}</strong> ${textoPieza}
+                            ${item.s ? `<br><small style="color:#aaa;">Sabor: ${item.s}</small>` : ''}
+                            ${item.sin.length > 0 ? `<br><small style="color:var(--accent-color)">SIN: ${item.sin.join(', ')}</small>` : ''}
+                        </div>
+                        <div style="font-weight:bold; color:var(--highlight-color); margin-left:10px;">
+                            $${item.precio}
+                        </div>
+                    </div>
+                `}).join('');
+            }
+            
+            document.getElementById('totalCarrito').innerText = `TOTAL: $${total}`;
             document.getElementById('modalCart').style.display = 'flex';
         }
 
         function enviarPedido(tipo) {
             if(carrito.length === 0) return;
-            let msg = "¡Hola LA BRAVA! 🔥 Quisiera este pedido:\n\n";
+            
+            let nombreCliente = document.getElementById('nombreCliente').value.trim();
+            let msg = nombreCliente 
+                ? `¡Hola LA BRAVA! 🔥 Soy *${nombreCliente}* y quisiera este pedido:\n\n` 
+                : `¡Hola LA BRAVA! 🔥 Quisiera este pedido:\n\n`;
+            
+            let total = 0;
+            
             carrito.forEach((item, i) => {
-                msg += `${i+1}. ${item.nombre} ${item.p ? `(${item.p})`:''}\n`;
-                if(item.s) msg += `- Salsa: ${item.s}\n`;
-                if(item.sin.length > 0) msg += `- SIN: ${item.sin.join(', ')}\n`;
+                total += item.precio;
+                let textoPieza = item.p ? `(${item.p.split(' - ')[0]})` : '';
+                msg += `👉 *${item.nombre}* ${textoPieza} -> $${item.precio}\n`;
+                if(item.s) msg += `   🔸 Sabor/Salsa: ${item.s}\n`;
+                if(item.sin.length > 0) msg += `   ❌ SIN: ${item.sin.join(', ')}\n`;
                 msg += "----------\n";
             });
+            
+            msg += `\n💰 *TOTAL A PAGAR: $${total}*`;
 
             if(tipo === 'wa') {
-                window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`);
+                window.open(`https://wa.me/${MI_WA}?text=${encodeURIComponent(msg)}`, '_blank');
             } else {
                 const el = document.createElement('textarea');
-                el.value = msg; document.body.appendChild(el); el.select();
+                el.value = msg; 
+                el.setAttribute('readonly', '');
+                el.style.position = 'absolute'; el.style.left = '-9999px';
+                document.body.appendChild(el); el.select();
                 document.execCommand('copy'); document.body.removeChild(el);
-                alert("✅ Copiado. Ábrese el chat y pégalo.");
-                window.open(`https://m.me/${MI_FB_ID}`);
+                
+                alert("✅ Pedido copiado. Se abrirá el chat, pégalo ahí.");
+                window.open(`https://m.me/${MI_FB_ID}`, '_blank');
             }
-            setTimeout(() => { location.reload(); }, 2000);
+
+            setTimeout(() => { 
+                vaciarTodo(); 
+                document.getElementById('modalCart').style.display = 'none';
+                document.getElementById('nombreCliente').value = ''; 
+            }, 1500);
         }
 
-        function vaciarTodo() { carrito = []; document.getElementById('cartCount').innerText = "0"; abrirCarrito(); }
+        function vaciarTodo() { 
+            carrito = []; 
+            document.getElementById('cartCount').innerText = "0"; 
+            abrirCarrito(); 
+        }
+
         function cambiarPestana(id, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).style.display = 'block';
             btn.classList.add('active');
         }
-        function cerrarModal(e) { if(e.target.className === 'modal-overlay') e.target.style.display = 'none'; }
+
+        function cerrarModal(e) { if(e.target.className.includes('modal-overlay')) e.target.style.display = 'none'; }
+        
+        function mostrarToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2500);
+        }
     </script>
 </body>
 </html>
